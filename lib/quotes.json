@@ -1,0 +1,26 @@
+[
+  {
+    "topic": "motivation",
+    "quotes": [
+      "The only way to do great work is to love what you do. - Steve Jobs",
+      "Believe you can and you're halfway there. - Theodore Roosevelt",
+      "Your limitation—it's only your imagination. - Unknown"
+    ]
+  },
+  {
+    "topic": "success",
+    "quotes": [
+      "Success is not final, failure is not fatal: It is the courage to continue that counts. - Winston Churchill",
+      "Don't let yesterday take up too much of today. - Will Rogers",
+      "You learn more from failure than from success. Don't let it stop you. - Unknown"
+    ]
+  },
+  {
+    "topic": "life",
+    "quotes": [
+      "Life is what happens when you're busy making other plans. - John Lennon",
+      "In the end, it's not the years in your life that count. It's the life in your years. - Abraham Lincoln",
+      "Life is either a daring adventure or nothing at all. - Helen Keller"
+    ]
+  }
+]
