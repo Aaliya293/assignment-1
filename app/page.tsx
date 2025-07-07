@@ -23,7 +23,7 @@ export default function QuoteGenerator() {
     if (foundTopic) {
       setQuotes(foundTopic.quotes);
       setError('');
-      setTopic(searchTerm); // Update input field with correct casing
+      setTopic(searchTerm);
     } else {
       setQuotes([]);
       setError(`No quotes found for "${searchTerm}". Try ${quotesData.map(t => t.topic).join(', ')}.`);
@@ -31,13 +31,19 @@ export default function QuoteGenerator() {
   };
 
   const handleSurpriseMe = () => {
-    const randomTopic = quotesData[Math.floor(Math.random() * quotesData.length)].topic;
+    const randomIndex = Math.floor(Math.random() * quotesData.length);
+    const randomTopic = quotesData[randomIndex]?.topic || 'motivation';
     searchQuotes(randomTopic);
   };
 
-  const handleShare = (quote: string) => {
-    navigator.clipboard.writeText(quote);
-    alert('Quote copied to clipboard!');
+  const handleShare = async (quote: string) => {
+    try {
+      await navigator.clipboard.writeText(quote);
+      alert('Quote copied to clipboard!');
+    } catch (err) {
+      console.error('Failed to copy:', err);
+      alert('Failed to copy quote to clipboard');
+    }
   };
 
   return (
@@ -94,20 +100,23 @@ export default function QuoteGenerator() {
                 {quotes.length} {quotes.length === 1 ? 'Quote' : 'Quotes'} about {topic}
               </h2>
               <ul className="space-y-3">
-                {quotes.map((quote, index) => (
-                  <li key={index} className="p-4 bg-white rounded-md shadow-sm border border-gray-200">
-                    <p className="text-gray-800">"{quote.split(' - ')[0]}"</p>
-                    <p className="text-sm text-gray-600 mt-1">— {quote.split(' - ')[1]}</p>
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      className="mt-2 text-xs"
-                      onClick={() => handleShare(quote)}
-                    >
-                      📋 Share
-                    </Button>
-                  </li>
-                ))}
+                {quotes.map((quote, index) => {
+                  const [quoteText, author] = quote.split(' - ');
+                  return (
+                    <li key={index} className="p-4 bg-white rounded-md shadow-sm border border-gray-200">
+                      <p className="text-gray-800">&quot;{quoteText}&quot;</p>
+                      {author && <p className="text-sm text-gray-600 mt-1">— {author}</p>}
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="mt-2 text-xs"
+                        onClick={() => handleShare(quote)}
+                      >
+                        📋 Share
+                      </Button>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           )}
